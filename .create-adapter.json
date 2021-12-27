@@ -1,0 +1,43 @@
+{
+    "cli": true,
+    "target": "directory",
+    "adapterName": "spanet",
+    "title": "SpaNet SpaLink Connector",
+    "description": "Connector for Vortex Spas using SpaNet API",
+    "keywords": [
+        "SPA",
+        "Pool",
+        "SpaNet",
+        "SpaLink"
+    ],
+    "expert": "yes",
+    "features": [
+        "adapter"
+    ],
+    "adminFeatures": [],
+    "type": "garden",
+    "startMode": "daemon",
+    "connectionType": "cloud",
+    "dataSource": "poll",
+    "connectionIndicator": "no",
+    "language": "JavaScript",
+    "adminReact": "no",
+    "tools": [
+        "ESLint",
+        "type checking"
+    ],
+    "releaseScript": "no",
+    "devServer": "no",
+    "indentation": "Space (4)",
+    "quotes": "double",
+    "es6class": "yes",
+    "authorName": "Christian Biermann",
+    "authorGithub": "chrbier",
+    "authorEmail": "chrbier@googlemail.com",
+    "gitRemoteProtocol": "SSH",
+    "gitCommit": "yes",
+    "defaultBranch": "main",
+    "license": "MIT License",
+    "dependabot": "no",
+    "creatorVersion": "2.0.1"
+}

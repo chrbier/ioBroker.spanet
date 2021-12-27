@@ -1,0 +1,79 @@
+{
+    "common": {
+        "name": "spanet",
+        "version": "0.0.1",
+        "news": {
+            "0.0.1": {
+                "en": "initial release",
+                "de": "Erstveröffentlichung",
+                "ru": "Начальная версия",
+                "pt": "lançamento inicial",
+                "nl": "Eerste uitgave",
+                "fr": "Première version",
+                "it": "Versione iniziale",
+                "es": "Versión inicial",
+                "pl": "Pierwsze wydanie",
+                "zh-cn": "首次出版"
+            }
+        },
+        "title": "SpaNet SpaLink Connector",
+        "titleLang": {
+            "en": "SpaNet SpaLink Connector",
+            "de": "SpaNet SpaLink Connector",
+            "ru": "SpaNet SpaLink Connector",
+            "pt": "SpaNet SpaLink Connector",
+            "nl": "SpaNet SpaLink Connector",
+            "fr": "SpaNet SpaLink Connector",
+            "it": "SpaNet SpaLink Connector",
+            "es": "SpaNet SpaLink Connector",
+            "pl": "SpaNet SpaLink Connector",
+            "zh-cn": "SpaNet SpaLink Connector"
+        },
+        "desc": {
+            "en": "Connector for Vortex Spas using SpaNet API",
+            "de": "Connector for Vortex Spas using SpaNet API",
+            "ru": "Connector for Vortex Spas using SpaNet API",
+            "pt": "Connector for Vortex Spas using SpaNet API",
+            "nl": "Connector for Vortex Spas using SpaNet API",
+            "fr": "Connector for Vortex Spas using SpaNet API",
+            "it": "Connector for Vortex Spas using SpaNet API",
+            "es": "Connector for Vortex Spas using SpaNet API",
+            "pl": "Connector for Vortex Spas using SpaNet API",
+            "zh-cn": "Connector for Vortex Spas using SpaNet API"
+        },
+        "authors": [
+            "Christian Biermann <chrbier@googlemail.com>"
+        ],
+        "keywords": [
+            "SPA",
+            "Pool",
+            "SpaNet",
+            "SpaLink"
+        ],
+        "license": "MIT",
+        "platform": "Javascript/Node.js",
+        "main": "main.js",
+        "icon": "spanet.png",
+        "enabled": true,
+        "extIcon": "https://raw.githubusercontent.com/chrbier/ioBroker.spanet/main/admin/spanet.png",
+        "readme": "https://github.com/chrbier/ioBroker.spanet/blob/main/README.md",
+        "loglevel": "info",
+        "mode": "daemon",
+        "type": "garden",
+        "compact": true,
+        "connectionType": "cloud",
+        "dataSource": "poll",
+        "materialize": true,
+        "dependencies": [
+            {
+                "js-controller": ">=2.0.0"
+            }
+        ]
+    },
+    "native": {
+        "option1": true,
+        "option2": "42"
+    },
+    "objects": [],
+    "instanceObjects": []
+}
