@@ -14,6 +14,9 @@
 ## spanet adapter for ioBroker
 
 Connector for Vortex Spas using SpaNet API
+## Credits
+
+<div>Icons erstellt von <a href="https://www.flaticon.com/de/autoren/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/de/" title="Flaticon">www.flaticon.com</a></div>
 
 ## Developer manual
 This section is intended for the developer. It can be deleted later
