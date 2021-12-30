@@ -71,8 +71,9 @@
         ]
     },
     "native": {
-        "option1": true,
-        "option2": "42"
+        "username": "test",
+        "mypassword": "hashedpw",
+		"poolname": "pool"
     },
     "objects": [],
     "instanceObjects": []

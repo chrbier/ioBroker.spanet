@@ -7,6 +7,15 @@
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
 const utils = require("@iobroker/adapter-core");
+const request = require('request');
+// VARIABLES - EDIT THIS SECTION
+var username = 'YOUR USERNAME'; // <<< FILL THIS IN WITH YOUR SPALINK USERNAME
+var spaName = 'YOUR SPA NAME';  // <<< FILL THIS IN WITH A VALID SPA NAME ON YOUR ACCOUNT
+var password = 'YOUR HASHED PASSWORD'; // <<< FILL THIS IN WITH YOUR SPALINK ENCRYPTED PASSWORD
+// To get your encrypted password, see instructions at section 1.1 on the Github repo https://github.com/BlaT2512/spanet-api/blob/main/spanet.md
+
+// making the web requests
+
 
 // Load your modules here, e.g.:
 // const fs = require("fs");
@@ -36,8 +45,92 @@ class Spanet extends utils.Adapter {
 
         // The adapters config (in the instance object everything under the attribute "native") is accessible via
         // this.config:
-        this.log.info("config option1: " + this.config.option1);
-        this.log.info("config option2: " + this.config.option2);
+        this.log.info("config username: " + this.config.username);
+        this.log.info("config password: " + this.config.mypassword);
+		this.log.info("config poolname: " + this.config.poolname);
+		username = this.config.username;
+		spaName = this.config.poolname;
+		password = this.config.mypassword;
+		
+		//connection to api
+		// First, login to API with your username and encrypted password key to see if user exists, otherwise throw error
+		const loginParams = {
+		uri: 'https://api.spanet.net.au/api/MemberLogin',
+		method: 'POST',
+		json: {
+		'login': username,
+		'api_key': '4a483b9a-8f02-4e46-8bfa-0cf5732dbbd5',
+		'password': password,
+		},
+	};
+
+	// Make the login request
+	request(loginParams, (error, response, body) => {
+	if (!error && response.statusCode === 200 && body['success']) {
+
+		// If you get to this section, login was successful
+		this.log.info('Successfully logged into SpaNET account!');
+      
+		// Variables needed for next request
+		const memberId = body['data']['id_member'];
+		const sessionId = body['data']['id_session'];
+
+		// Make the next request which will check the spas on your account
+		const spaParams = {
+		uri: 'https://api.spanet.net.au/api/membersockets?id_member=' + memberId + '&id_session=' + sessionId,
+		method: 'GET',
+		};
+
+		request(spaParams, (error, response, body) => {
+		if (!error && response.statusCode === 200 && JSON.parse(body)['success']) {
+       
+			// If you get to this section, the spa request was successful
+			this.log.info('Successfully got list of spa\'s linked to SpaNET account!');
+
+			// Parse through the list of spa sockets and check that the spa specified at the top exists
+			const bodyJSON = JSON.parse(body);
+
+			if (bodyJSON['sockets'][0] !== undefined){ // Make sure there are at least 1 spas on your account
+
+				let spaFound = false; // Variable to track if the right spa has been found
+				for(const result of bodyJSON['sockets']){
+            
+				// Check whether the name matches the spa name specified at the top
+				if (result['name'] === spaName){
+
+					// This is the correct spa that you chose
+					spaFound = true;
+                
+					// WRITE SOME CODE TO DO ONCE THE SPA HAS BEEN FOUND
+					// You could connect to it's websocket, this is done in the code-demo.js file in the code-demo folder
+					this.log.info('Spa successfully found! Spa name:', spaName);
+					this.log.info('Use these details for websocket connection: Spa IP ' + result['spaurl'].slice(0, -5) + ' ; Member ID ' + result['id_member'] + ' ; Socket ID ' + result['id_sockets']);
+                
+				}
+
+				}
+
+				if (spaFound === false){
+					// The spa couldn't be found, do something such as throw an error
+					this.log.info('Error: The specified spa does not exist for the SpaLINK account. Please log in with a different account or change the spa name.');
+				}
+
+			} else {
+				// No spa's are on the linked account, do something such as throw an error
+				this.log.info('Error: No spa\'s are linked to the specified SpaLINK account. Please log in with a different account or link a spa in the SpaLINK app.');
+			}
+
+		} else {
+			// Couldn't make the second request to get spa websockets, do something such as throw an error (unexpected error, highly unlikely if your code is right)
+			this.log.info('Error: Unable to obtain spa details from member, but login was successful. Please check your network connection, or open an issue on GitHub (unexpected).');
+		}
+		});
+
+  } else {
+    // Login failed, do something such as throw an error
+    this.log.info('Error: Unable to login with details provided. Please ensure that you have the correct username and encrypted password (see 1.1 at https://github.com/BlaT2512/spanet-api/blob/main/spanet.md for details to obtain).');
+  }
+})
 
         /*
         For every state in the system there has to be also an object of type state
